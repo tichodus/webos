@@ -1,23 +1,50 @@
 import * as React from 'react';
-import Worker from 'worker-loader!./kernel/tasks/task.worker';
 import './App.css';
-import { Messages } from './kernel/tasks/types/message.enum';
 import logo from './logo.svg';
-import { Message } from './kernel/tasks/types/message';
-import { Hooks } from './kernel/tasks/callbacks';
+import taskManager from './kernel/tasks/models/taskManager';
 
 
 class App extends React.Component {
   public componentDidMount() {
-    const worker = new Worker();
-    const foo = () => console.log("Started");
-    Hooks.onRun = () => foo();
-    const message: Message = {
-      body: 5,
-      message: Messages.RUN,
+
+
+
+    const foo = () => {
+      self.addEventListener("message", (e) => {
+        if (e.data === 'run') {
+          console.log("Worker 1 started");
+        }
+        if (e.data === 'quit') {
+          console.log("Worker 1 terminated");
+        }
+      })
     };
-    worker.postMessage(message);
-    // setTimeout(() => worker.postMessage(Messages.PAUSE), 5000);
+
+    const goo = () => {
+      self.addEventListener("message", (e) => {
+        if (e.data === 'run') {
+          console.log("Worker 2 started");
+        }
+        if (e.data === 'quit') {
+          console.log("Worker 2 terminated");
+        }
+      })
+    };
+
+    const task = taskManager.fork();
+    taskManager.setJobForTask({
+      job: foo,
+      taskId: task.Pid
+    });
+    taskManager.run(task);
+
+    const task2 = taskManager.fork();
+    taskManager.setJobForTask({
+      job: goo,
+      taskId: task2.Pid
+    });
+    taskManager.run(task2);
+
   }
 
   public render() {
