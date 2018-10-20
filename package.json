@@ -1,11 +1,15 @@
 {
   "name": "webos",
-  "version": "0.1.0",
+  "version": "6.9.1",
   "private": true,
   "dependencies": {
+    "moment": "^2.22.2",
     "react": "^16.5.2",
+    "react-dialog": "^1.0.2",
     "react-dom": "^16.5.2",
-    "react-scripts-ts": "3.1.0"
+    "react-scripts-ts": "3.1.0",
+    "worker-loader": "^2.0.0",
+    "worker-render": "^1.2.2"
   },
   "scripts": {
     "start": "react-scripts-ts start",
