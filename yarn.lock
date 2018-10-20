@@ -1527,6 +1527,22 @@ camelcase@^4.0.0, camelcase@^4.1.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
   integrity sha1-1UVjW+HjPFQmScaRc+Xeas+uNN0=
 
+can-simple-dom@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/can-simple-dom/-/can-simple-dom-0.3.0.tgz#a7b364d228595e11a3b6e9d662741e893c58339d"
+  integrity sha1-p7Nk0ihZXhGjtunWYnQeiTxYM50=
+  dependencies:
+    micro-location "^0.1.4"
+    simple-html-tokenizer "^0.2.1"
+
+can@^2.3.0-pre.1, can@^2.3.0-pre.2:
+  version "2.3.35"
+  resolved "https://registry.yarnpkg.com/can/-/can-2.3.35.tgz#9e5f4032e53e6775d4ad8a9926f4ef51bd108835"
+  integrity sha512-lGgpf3DKRne8vPvFkFCQEgIGypqd3IHc9pte38UuK3ePVsy1RO4Cgp8maiFr5FKgWrXiz577UUT0UeYzJYyrtA==
+  dependencies:
+    can-simple-dom "^0.3.0"
+    jquery ">=1.9.0 <1.12.0 || >=2.1.0 <2.3.0"
+
 caniuse-api@^1.5.2:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/caniuse-api/-/caniuse-api-1.6.1.tgz#b534e7c734c4f81ec5fbe8aca2ad24354b962c6c"
@@ -2439,6 +2455,14 @@ dom-converter@~0.2:
   integrity sha512-gd3ypIPfOMr9h5jIKq8E3sHOTCjeirnl0WK5ZdS1AW0Odt0b1PaWaHdJ4Qk4klv+YB9aJBS7mESXjFoDQPu6DA==
   dependencies:
     utila "~0.4"
+
+dom-patch@^1.0.0:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/dom-patch/-/dom-patch-1.0.4.tgz#01887904fce09771e99ccbd53ec4f877d8c9ed5d"
+  integrity sha1-AYh5BPzgl3HpnMvVPsT4d9jJ7V0=
+  dependencies:
+    can "^2.3.0-pre.2"
+    node-route "^1.0.0"
 
 dom-serializer@0:
   version "0.1.0"
@@ -4662,6 +4686,11 @@ jest@20.0.4:
   dependencies:
     jest-cli "^20.0.4"
 
+"jquery@>=1.9.0 <1.12.0 || >=2.1.0 <2.3.0":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
+  integrity sha1-LInWiJterFIqfuoywUUhVZxsvwI=
+
 js-base64@^2.1.9:
   version "2.4.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.9.tgz#748911fb04f48a60c4771b375cac45a80df11c03"
@@ -5195,6 +5224,11 @@ methods@~1.1.2:
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
   integrity sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=
 
+micro-location@^0.1.4:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/micro-location/-/micro-location-0.1.5.tgz#282a2ad93a25ed73b2868974ea9999428ffc1be2"
+  integrity sha1-KCoq2Tol7XOyhol06pmZQo/8G+I=
+
 micromatch@^2.1.5, micromatch@^2.3.11:
   version "2.3.11"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-2.3.11.tgz#86677c97d1720b363431d04d0d15293bd38c1565"
@@ -5520,6 +5554,11 @@ node-pre-gyp@^0.10.0:
     rimraf "^2.6.1"
     semver "^5.3.0"
     tar "^4"
+
+node-route@^1.0.0, node-route@^1.0.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/node-route/-/node-route-1.2.1.tgz#fe473ad10ceda5c6c308386a8c94dc4c86aef694"
+  integrity sha1-/kc60QztpcbDCDhqjJTcTIau9pQ=
 
 nopt@^4.0.1:
   version "4.0.1"
@@ -7287,6 +7326,11 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
+simple-html-tokenizer@^0.2.1:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/simple-html-tokenizer/-/simple-html-tokenizer-0.2.6.tgz#a6efab7bc705cf3a96f1aaeaa1a76365f0d16c33"
+  integrity sha1-pu+re8cFzzqW8arqoadjZfDRbDM=
+
 slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
@@ -8542,6 +8586,16 @@ worker-loader@^2.0.0:
   dependencies:
     loader-utils "^1.0.0"
     schema-utils "^0.4.0"
+
+worker-render@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/worker-render/-/worker-render-1.2.2.tgz#86f5e3d830d6b4be4e3760f0d76fe6ea368f5ebd"
+  integrity sha1-hvXj2DDWtL5ON2Dw12/m6jaPXr0=
+  dependencies:
+    can "^2.3.0-pre.1"
+    dom-patch "^1.0.0"
+    micro-location "^0.1.4"
+    node-route "^1.0.1"
 
 wrap-ansi@^2.0.0:
   version "2.1.0"

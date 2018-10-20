@@ -1,50 +1,64 @@
 import * as React from 'react';
 import './App.css';
 import logo from './logo.svg';
-import taskManager from './kernel/tasks/models/taskManager';
+import scheduler from './kernel/proces-management/scheduler/scheduler';
+import taskManager from './kernel/proces-management/task/taskManager';
+
 
 
 class App extends React.Component {
+
   public componentDidMount() {
 
 
-
     const foo = () => {
-      self.addEventListener("message", (e) => {
+      self.onmessage = e => {
         if (e.data === 'run') {
-          console.log("Worker 1 started");
+          console.log("Task 1 started");
         }
-        if (e.data === 'quit') {
-          console.log("Worker 1 terminated");
-        }
-      })
-    };
+      }
+    }
 
     const goo = () => {
-      self.addEventListener("message", (e) => {
+      self.onmessage = e => {
         if (e.data === 'run') {
-          console.log("Worker 2 started");
+          console.log("Task 2 started");
         }
-        if (e.data === 'quit') {
-          console.log("Worker 2 terminated");
-        }
-      })
-    };
+      }
+    }
 
-    const task = taskManager.fork();
+    const task1 = taskManager.fork();
     taskManager.setJobForTask({
       job: foo,
-      taskId: task.Pid
+      taskId: task1.Pid,
     });
-    taskManager.run(task);
+    taskManager.run(task1);
 
     const task2 = taskManager.fork();
     taskManager.setJobForTask({
       job: goo,
-      taskId: task2.Pid
+      taskId: task2.Pid,
     });
     taskManager.run(task2);
 
+    setTimeout(() => scheduler.startScheduling(), 10000);
+
+  }
+
+
+  public addTask() {
+    const task = taskManager.fork();
+    const coo = () => {
+      self.onmessage = e => {
+        if (e.data === 'run') {
+          console.log("Task 3 started");
+        }
+      }
+    }
+    taskManager.setJobForTask({
+      job: coo, taskId: task.Pid
+    })
+    taskManager.run(task);
   }
 
   public render() {
@@ -57,6 +71,8 @@ class App extends React.Component {
         <p className="App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
+
+        <button onClick={this.addTask} >Add task</button>
       </div>
     );
   }

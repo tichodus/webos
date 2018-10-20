@@ -1,5 +1,5 @@
-import { TaskOwner } from '../types/taskOwner.enum';
-import State from '../types/state.enum';
+import { TaskOwner } from './types/taskOwner.enum';
+import State from './types/state.enum';
 
 export class Task {
     private pid: number;

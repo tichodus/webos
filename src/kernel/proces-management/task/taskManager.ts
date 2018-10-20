@@ -1,7 +1,7 @@
 import { Task } from './task';
 import tasksTable, { TasksTable } from './tasksTable';
-import { Job } from '../types/job';
-import { Messages } from '../types/message.enum';
+import { Job } from './types/job';
+import scheduler from '../scheduler/scheduler';
 
 class TaskManager {
     private availableIds: number;
@@ -19,10 +19,7 @@ class TaskManager {
     }
 
     public run(task: Task) {
-        if (!task.Worker) {
-            throw Error("Task has no job to do.");
-        }
-        task.Worker.postMessage(Messages.RUN)
+       scheduler.prepareForScheduling(task);
     }
 
     public beforeTerminate(taskId: number, callback: () => void) {
@@ -41,6 +38,10 @@ class TaskManager {
             taskWorker.terminate();
         }
         this.tasksTable.removeFromTable(taskId);
+    }
+
+    public spawnWorker(callback: () => void) {
+        return new Worker(URL.createObjectURL(new Blob(['('+callback + ')()'])));
     }
 }
 
