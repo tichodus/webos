@@ -27,18 +27,18 @@ export class TaskQueue {
         this.readyQueue.push(task);
     }
 
-    public getWorkingTask(taskId: number): Task {
+    public getWorkingTask(taskId: number): Task | null {
         const workingTask = this.workingQueue.find((task: Task) => task.Pid === taskId);
         if (!workingTask) {
-            throw Error("No task with given id is in the working queue");
+           return null;
         }
         return workingTask;
     }
 
-    public getReadyTask(taskId: number): Task {
+    public getReadyTask(taskId: number): Task | null {
         const readyTask = this.readyQueue.find((task: Task) => task.Pid === taskId);
         if (!readyTask) {
-            throw Error("No task with given id is in the ready queue");
+            return null
         }
 
         return readyTask;

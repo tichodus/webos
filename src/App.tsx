@@ -3,6 +3,7 @@ import './App.css';
 import logo from './logo.svg';
 import scheduler from './kernel/proces-management/scheduler/scheduler';
 import taskManager from './kernel/proces-management/task/taskManager';
+import interupter from './kernel/proces-management/interupter/interupter';
 
 
 
@@ -51,7 +52,7 @@ class App extends React.Component {
     const coo = () => {
       self.onmessage = e => {
         if (e.data === 'run') {
-          console.log("Task 3 started");
+          setInterval(()=>console.log("Task 3 started"),1000);
         }
       }
     }
@@ -59,6 +60,10 @@ class App extends React.Component {
       job: coo, taskId: task.Pid
     })
     taskManager.run(task);
+  }
+
+ public terminate() {
+    interupter.interupt(3);
   }
 
   public render() {
@@ -73,6 +78,7 @@ class App extends React.Component {
         </p>
 
         <button onClick={this.addTask} >Add task</button>
+        <button onClick={this.terminate} >Add task</button>
       </div>
     );
   }

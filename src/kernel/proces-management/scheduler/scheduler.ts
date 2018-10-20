@@ -21,16 +21,17 @@ export class Scheduler {
         this.queue.prepareTask(task);
     }
 
-    public getWorkingTask(taskId: number) {
+    public getWorkingTask(taskId: number): Task | null {
         return this.queue.getWorkingTask(taskId);
     }
 
-    public getReadyTask(taskId: number): Task {
+    public getReadyTask(taskId: number): Task | null {
         return this.queue.getReadyTask(taskId);
+
     }
 
     public removeFromReadyQueue(taskId: number): Task {
-        const taskToRemove: Task = this.getReadyTask(taskId);
+        const taskToRemove = this.getReadyTask(taskId);
         if (!taskToRemove) {
             throw Error("Task for removal is not in the ready queue");
         }
@@ -39,7 +40,7 @@ export class Scheduler {
     }
 
     public removeFromWorkingQueue(taskId: number): Task {
-        const taskToRemove: Task = this.getWorkingTask(taskId);
+        const taskToRemove = this.getWorkingTask(taskId);
         if (!taskToRemove) {
             throw Error("Task for removal is not in the working queue");
         }
