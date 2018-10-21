@@ -1,0 +1,28 @@
+.modal--container {
+    background-color: #F5F5F5;
+    opacity: .7;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left:0;
+    height: 50px;
+}
+
+.modal__title--container {
+    padding:0 10px 0 10px;
+}
+
+.button--close {
+    float: right;
+    width:37px;
+    height:37px;
+}
+
+.modal__title--container button {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+h1{
+    margin:6.5px 0 6.5px 0 !important;
+}

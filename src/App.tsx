@@ -4,7 +4,9 @@ import logo from './logo.svg';
 import scheduler from './kernel/proces-management/scheduler/scheduler';
 import taskManager from './kernel/proces-management/task/taskManager';
 import interupter from './kernel/proces-management/interupter/interupter';
-import BaseDialog from './shell/window/dailog/base-dialog';
+import { IWindowOptions } from './shell/window/window';
+import { WindowManager } from './shell/window-manager/window.manager';
+
 
 
 
@@ -53,7 +55,7 @@ class App extends React.Component {
     const coo = () => {
       self.onmessage = e => {
         if (e.data === 'run') {
-          setInterval(()=>console.log("Task 3 started"),1000);
+          setInterval(() => console.log("Task 3 started"), 1000);
         }
       }
     }
@@ -63,8 +65,17 @@ class App extends React.Component {
     taskManager.run(task);
   }
 
- public terminate() {
+  public terminate() {
     interupter.interupt(3);
+  }
+
+   public openDialog = () => {
+    const windowOptions: IWindowOptions = {
+      content: <button onClick={this.openDialog}>click</button>,
+      subtitle: "Test",
+    }
+
+   WindowManager.runWindow(windowOptions);
   }
 
   public render() {
@@ -74,8 +85,7 @@ class App extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        
-        <BaseDialog subtitle='test'/>
+        <button onClick={this.openDialog}>Open dialog</button>
       </div>
     );
   }
