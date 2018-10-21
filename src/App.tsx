@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import scheduler from './kernel/proces-management/scheduler/scheduler';
 import taskManager from './kernel/proces-management/task/taskManager';
 import interupter from './kernel/proces-management/interupter/interupter';
+import BaseDialog from './shell/window/dailog/base-dialog';
 
 
 
@@ -73,12 +74,8 @@ class App extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-
-        <button onClick={this.addTask} >Add task</button>
-        <button onClick={this.terminate} >Add task</button>
+        
+        <BaseDialog subtitle='test'/>
       </div>
     );
   }

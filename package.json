@@ -5,8 +5,8 @@
   "dependencies": {
     "moment": "^2.22.2",
     "react": "^16.5.2",
-    "react-dialog": "^1.0.2",
     "react-dom": "^16.5.2",
+    "react-modal": "^3.6.1",
     "react-scripts-ts": "3.1.0",
     "worker-loader": "^2.0.0",
     "worker-render": "^1.2.2"
@@ -22,6 +22,7 @@
     "@types/node": "^10.11.7",
     "@types/react": "^16.4.16",
     "@types/react-dom": "^16.0.9",
+    "@types/react-modal": "^3.2.1",
     "typescript": "^3.1.3"
   }
 }
