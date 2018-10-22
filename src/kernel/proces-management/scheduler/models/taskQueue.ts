@@ -1,5 +1,5 @@
 import { Task } from '../../task/task';
-import { Messages } from '../../task/types/message.enum';
+import { Messages } from '../../../types/message.enum';
 
 export class TaskQueue {
     private readyQueue: Task[];
@@ -30,7 +30,7 @@ export class TaskQueue {
     public getWorkingTask(taskId: number): Task | null {
         const workingTask = this.workingQueue.find((task: Task) => task.Pid === taskId);
         if (!workingTask) {
-           return null;
+            return null;
         }
         return workingTask;
     }
@@ -50,5 +50,13 @@ export class TaskQueue {
 
     public removeFromWorkingQueue(taskId: number) {
         this.workingQueue = this.workingQueue.filter((task: Task) => task.Pid !== taskId);
+    }
+
+    public notifyWorking(message: string) {
+        this.workingQueue.forEach((task: Task) => {
+            if (task.Worker) {
+                task.Worker.postMessage(message);
+            }
+        });
     }
 }

@@ -1,11 +1,17 @@
 import * as React from 'react';
 import './App.css';
 import logo from './logo.svg';
-import scheduler from './kernel/proces-management/scheduler/scheduler';
+// import scheduler from './kernel/proces-management/scheduler/scheduler';
 import taskManager from './kernel/proces-management/task/taskManager';
-import interupter from './kernel/proces-management/interupter/interupter';
+// import interupter from './kernel/proces-management/interupter/interupter';
 import { IWindowOptions } from './shell/window/window';
 import { WindowManager } from './shell/window-manager/window.manager';
+import scheduler from './kernel/proces-management/scheduler/scheduler';
+// import Worker from 'worker-loader!./test/t';
+// import testApp from './test/testApp';
+import { Connector } from './kernel/connector/connector';
+import { Renderer } from './shell/window-manager/renderer';
+
 
 
 
@@ -13,69 +19,53 @@ import { WindowManager } from './shell/window-manager/window.manager';
 class App extends React.Component {
 
   public componentDidMount() {
-
-
-    const foo = () => {
-      self.onmessage = e => {
-        if (e.data === 'run') {
-          console.log("Task 1 started");
-        }
-      }
-    }
-
-    const goo = () => {
-      self.onmessage = e => {
-        if (e.data === 'run') {
-          console.log("Task 2 started");
-        }
-      }
-    }
-
-    const task1 = taskManager.fork();
-    taskManager.setJobForTask({
-      job: foo,
-      taskId: task1.Pid,
+    setTimeout(() => scheduler.startScheduling(), 3000);
+    window.addEventListener("click", ($event) => {
+      console.log(($event.target as any).title === 'workerEvent');
+        scheduler.notifyWorking(($event.target as any).id);
     });
-    taskManager.run(task1);
-
-    const task2 = taskManager.fork();
-    taskManager.setJobForTask({
-      job: goo,
-      taskId: task2.Pid,
-    });
-    taskManager.run(task2);
-
-    setTimeout(() => scheduler.startScheduling(), 10000);
-
   }
 
 
   public addTask() {
     const task = taskManager.fork();
-    const coo = () => {
-      self.onmessage = e => {
-        if (e.data === 'run') {
-          setInterval(() => console.log("Task 3 started"), 1000);
-        }
-      }
-    }
     taskManager.setJobForTask({
-      job: coo, taskId: task.Pid
-    })
-    taskManager.run(task);
+      taskId: task.Pid,
+      threadUrl: 'testApp',
+    }).then(() => {
+      taskManager.run(task);
+      const connector = new Connector(task, {
+        onRender: (jsx: any) => {
+
+         const el = Renderer.render(jsx);
+          const windowOptions: IWindowOptions = {
+            content: el,
+            subtitle: "Test",
+          }
+          WindowManager.runWindow(windowOptions);
+        }
+      });
+      connector.render();
+    });
+
+    // taskManager.run(task);
+    // connector.render();
+
+
   }
 
-  public terminate() {
-    interupter.interupt(3);
-  }
+  // public terminate() {
+  //   interupter.interupt(3);
+  // }
 
-   public openDialog = () => {
+
+  public openDialog = () => {
     const windowOptions: IWindowOptions = {
-      content: <button onClick={this.openDialog}>click</button>,
+      content: <button onClick={this.addTask}>Click</button>,
       subtitle: "Test",
     }
 
-   WindowManager.runWindow(windowOptions);
+    WindowManager.runWindow(windowOptions);
   }
 
   public render() {

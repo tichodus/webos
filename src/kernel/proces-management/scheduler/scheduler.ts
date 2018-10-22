@@ -49,6 +49,10 @@ export class Scheduler {
         return taskToRemove;
     }
 
+    public notifyWorking(message:string) {
+        this.queue.notifyWorking(message);
+    }
+
 }
 
 const scheduler: Scheduler = new Scheduler(new TaskQueue());
