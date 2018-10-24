@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Dialog from './dailog/dialog';
-// import * as ReactDOM from 'react-dom';
+import { Connector } from 'src/kernel/connector/connector';
+import * as ReactDOM from 'react-dom';
 
 
 
@@ -24,30 +25,62 @@ export interface IDialogOptions {
     contentLabel?: string,
     subtitle?: string,
     content?: JSX.Element,
-    parentRef?:Element
+    parentRef?: Element
 }
 
-export interface IWindowOptions extends IDialogOptions {
+export interface WindowOptions extends IDialogOptions {
     width?: number,
     height?: number,
-    parentRef?:Element
+    parentRef?: Element
 }
 
 export class Window {
     private dialog: JSX.Element;
-    constructor(options: IWindowOptions) {
-        this.dialog =
-            <Dialog
-                afterOpenModal={options.afterOpenModal}
-                modalOptions={options.modalOptions}
-                contentLabel={options.contentLabel}
-                subtitle={options.subtitle}
-                parentRef={options.parentRef}>
-                {options.content}
-            </Dialog>
+    private dialogRef: React.RefObject<Dialog>;
+    private options: WindowOptions;
+    private connector: Connector;
+
+    constructor(options: WindowOptions) {
+        this.options = options;
+        this.dialogRef = React.createRef<Dialog>();
     }
 
+    public get connectorInstance() {
+        return this.connector;
+    }
+
+    public setWindowContent(content: JSX.Element) {
+        this.options.content = content;
+        if (this.dialogRef.current) {
+            this.dialogRef.current.updateContent(content);
+        }
+    }
+
+    public get parent() {
+        return this.options.parentRef;
+    }
+
+    public get content() {
+        return this.options.content;
+    }
+
+    public render() {
+        const dialog = this.getDialog();
+        ReactDOM.render(dialog, (this.options.parentRef as HTMLDivElement));
+    }
     public getDialog() {
-       return this.dialog;
+        if (!this.dialog) {
+            this.dialog =
+                <Dialog
+                    ref={this.dialogRef}
+                    afterOpenModal={this.options.afterOpenModal}
+                    modalOptions={this.options.modalOptions}
+                    contentLabel={this.options.contentLabel}
+                    subtitle={this.options.subtitle}
+                    parentRef={this.options.parentRef}>
+                    {this.options.content}
+                </Dialog>
+        }
+        return this.dialog;
     }
 }

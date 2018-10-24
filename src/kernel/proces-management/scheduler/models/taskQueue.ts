@@ -1,5 +1,5 @@
 import { Task } from '../../task/task';
-import { Messages } from '../../../types/message.enum';
+import { MessageType } from '../../../types/message.enum';
 
 export class TaskQueue {
     private readyQueue: Task[];
@@ -20,7 +20,7 @@ export class TaskQueue {
             throw Error("Task has no job to do.");
         }
         this.workingQueue.push(task);
-        task.Worker.postMessage(Messages.RUN)
+        task.Worker.postMessage(MessageType.RUN)
     }
 
     public prepareTask(task: Task) {

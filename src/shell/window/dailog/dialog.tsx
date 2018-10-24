@@ -7,6 +7,7 @@ import { Icon, IconButton } from '@material-ui/core/';
 import { IDialogOptions } from '../window';
 
 interface IState {
+    content: JSX.Element | null | undefined
     modalIsOpen: boolean,
 }
 
@@ -17,12 +18,16 @@ class Dialog extends React.Component<IDialogOptions, IState> {
     constructor(props: IDialogOptions) {
         super(props);
         this.state = {
-            modalIsOpen: true
+            content: this.props.content,
+            modalIsOpen: true,
         }
     }
 
-    public render() {
+    public updateContent(content: JSX.Element) {
+        this.setState({ content });
+    }
 
+    public render() {
         return (
             <Modal
                 isOpen={this.state.modalIsOpen}
@@ -39,10 +44,9 @@ class Dialog extends React.Component<IDialogOptions, IState> {
                         <h1>{this.props.subtitle}</h1>
                     </div>
                     <div className='modal__body--container'>
-                        {this.props.children}
+                        {this.state.content}
                     </div>
                 </div>
-
             </Modal>
         );
 
@@ -54,7 +58,7 @@ class Dialog extends React.Component<IDialogOptions, IState> {
     public closeModal = () => {
         this.setState({ modalIsOpen: false });
         if (this.props.parentRef) {
-            document.removeChild(this.props.parentRef);
+            document.body.removeChild(this.props.parentRef);
         }
     }
 

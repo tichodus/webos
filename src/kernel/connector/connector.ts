@@ -1,37 +1,50 @@
 import { Task } from '../proces-management/task/task';
+import { Message, MessageType } from '../types/message.enum';
+import { WindowOptions, Window } from 'src/shell/window/window';
+import { WindowManager } from 'src/shell/window-manager/window.manager';
+import { Renderer } from 'src/shell/window-manager/renderer';
 
 
 
-export interface Application {
-    main?: () => void,
-}
-
-export interface ConnectorHooks {
-    onRender?: (content:any) => void
-}
 export class Connector {
     private task: Task;
-    private hooks: ConnectorHooks;
+    private window: Window
 
-    constructor(task: Task, hooks: ConnectorHooks) {
+    constructor(task: Task) {
         this.task = task;
-        this.hooks = hooks;
-    }
-
-    public render() {
-        const taskWorker = this.task.Worker;
-        if (!taskWorker) {
-            return;
-        }
-        taskWorker.postMessage("render");
-
-        taskWorker.onmessage = (event: MessageEvent) => {
-            if (this.hooks && this.hooks.onRender) {
-                const jsx:any = JSON.parse(event.data);
-                this.hooks.onRender(jsx);
-            }
+        if (this.task.Worker) {
+            this.task.Worker.onmessage = (event: MessageEvent) => this.onMessageRecieved(JSON.parse(event.data));
         }
     }
 
+    public render(jsxJson: JSON) {
+        const jsx: JSX.Element = Renderer.render(jsxJson);
+        if (!this.window) {
+            throw Error("Window is not initiated.");
+        }
+        this.window.setWindowContent(jsx);
+    }
 
+
+    public notify(message: Message) {
+        if (this.task.Worker) {
+            this.task.Worker.postMessage(message);
+        }
+    }
+
+    private initWindow(options: WindowOptions) {
+        this.window = WindowManager.createWindow(options);
+        this.window.render();
+    }
+
+    private onMessageRecieved(message: Message) {
+        switch (message.type) {
+            case MessageType.RENDER:
+                this.render(JSON.parse(message.data));
+                break;
+            case MessageType.INITWINDOW:
+                this.initWindow(JSON.parse(message.data));
+                break;
+        }
+    }
 }

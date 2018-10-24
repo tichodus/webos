@@ -1,12 +1,11 @@
-import { IWindowOptions, Window } from '../window/window';
-import * as ReactDOM from 'react-dom';
+import { WindowOptions, Window } from '../window/window';
 
 export class WindowManager {
-    public static runWindow(options: IWindowOptions) {
-        const window = new Window(options);
-        const dialog = window.getDialog();
+    public static createWindow(options: WindowOptions) {
         const content = document.createElement("div");
+        document.body.appendChild(content);
         options.parentRef = content;
-        ReactDOM.render(dialog, content);
+        const window = new Window(options);
+        return window;
     }
 }
