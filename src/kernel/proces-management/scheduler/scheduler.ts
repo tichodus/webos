@@ -10,6 +10,7 @@ export class Scheduler {
     }
 
     public startScheduling() {
+        console.log("Scheduling started");
         this.timeoutId = setInterval(() => this.queue.schedule(), 10);
     }
 
@@ -47,6 +48,10 @@ export class Scheduler {
 
         this.queue.removeFromWorkingQueue(taskId);
         return taskToRemove;
+    }
+
+    public notifyWorking(message: string) {
+        this.queue.notifyWorking(message);
     }
 
 }
