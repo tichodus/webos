@@ -30,6 +30,7 @@
     "react": "^16.5.2",
     "react-dev-utils": "^5.0.2",
     "react-dom": "^16.5.2",
+    "react-draggable": "^3.0.5",
     "react-modal": "^3.6.1",
     "resolve": "1.6.0",
     "source-map-loader": "^0.2.1",

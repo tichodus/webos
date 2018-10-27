@@ -28,17 +28,10 @@ class TaskManager {
     }
 
     public setJobForTask(job: Job) {
-       return import(`worker-loader!../../../test/${job.threadUrl}`).then((Worker:any) => {
+        return import(`worker-loader!../../../test/${job.threadUrl}`).then((Worker: any) => {
             const worker = new Worker();
             this.tasksTable.getTask(job.taskId).Worker = worker;
         })
-
-        // const blob = new Blob(['self.onmessage = ', job.job.toString()], { type: 'text/javascript' });
-        // const url = URL.createObjectURL(blob);
-        // const worker = new Worker(url);
-        // this.tasksTable.getTask(job.taskId).Worker = worker;
-
-        // return new Worker(url);
     }
 
     public terminate(taskId: number) {
@@ -47,6 +40,7 @@ class TaskManager {
             taskWorker.terminate();
         }
         this.tasksTable.removeFromTable(taskId);
+        scheduler.removeFromWorkingQueue(taskId);
     }
 
     public spawnWorker(callback: () => void) {

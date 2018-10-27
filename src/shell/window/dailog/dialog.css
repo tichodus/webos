@@ -1,15 +1,19 @@
 .modal--container {
     background-color: #F5F5F5;
-    opacity: .7;
-    position: absolute;
     top: 0;
-    width: 100%;
+    width: 500px;
+    position: absolute;
     left:0;
-    height: 50px;
+    height: 300px;
+}
+
+.modal--container:focus{
+    z-index: 1002;
 }
 
 .modal__title--container {
     padding:0 10px 0 10px;
+    background-color: #E8E8E8;
 }
 
 .button--close {
@@ -24,5 +28,5 @@
 }
 
 h1{
-    margin:6.5px 0 6.5px 0 !important;
+    margin:0 0 6.5px 0 !important;
 }
