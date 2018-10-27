@@ -50,7 +50,7 @@ class Dialog extends React.Component<DialogOptions, IState> {
             <Draggable>
                 <div tabIndex={0} className='modal--container'>
                     <div className='modal__title--container'>
-                        <IconButton color="primary" onClick={this.closeModal} className='button--close'>
+                        <IconButton color="default" onClick={this.closeModal} className='button--close'>
                             <Icon>close</Icon>
                         </IconButton>
                         <h1>{this.props.subtitle}</h1>

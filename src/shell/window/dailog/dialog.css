@@ -1,10 +1,11 @@
 .modal--container {
-    background-color: #F5F5F5;
+    background-color: #DCDCDC;
     top: 0;
     width: 500px;
     position: absolute;
     left:0;
     height: 300px;
+    border: 1px solid #303030;
 }
 
 .modal--container:focus{
@@ -13,7 +14,8 @@
 
 .modal__title--container {
     padding:0 10px 0 10px;
-    background-color: #E8E8E8;
+    background-color: #A9A9A9;
+    border-bottom: .5px solid #303030;
 }
 
 .button--close {
@@ -28,5 +30,8 @@
 }
 
 h1{
-    margin:0 0 6.5px 0 !important;
+    margin: 0;
+    font-family: "Roboto";
+    font-weight: 400;
+    color: #303030;
 }
