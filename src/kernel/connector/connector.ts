@@ -3,6 +3,7 @@ import { Message, MessageType } from '../types/message.enum';
 import { WindowOptions, Window } from 'src/shell/window/window';
 import { WindowManager } from 'src/shell/window-manager/window.manager';
 import { Renderer } from 'src/shell/window-manager/renderer';
+import interupter from '../proces-management/interupter/interupter';
 
 
 
@@ -33,6 +34,9 @@ export class Connector {
     }
 
     private initWindow(options: WindowOptions) {
+        options.onDialogClose = () => {
+            interupter.interupt(this.task.Pid);
+        }
         this.window = WindowManager.createWindow(options);
         this.window.render();
     }

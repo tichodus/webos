@@ -1,10 +1,7 @@
 import * as React from 'react';
-import * as Modal from 'react-modal';
-
-
+import Draggable from "react-draggable";
 import './dialog.css';
 import { Icon, IconButton } from '@material-ui/core/';
-import { IDialogOptions } from '../window';
 
 interface IState {
     content: JSX.Element | null | undefined
@@ -12,10 +9,31 @@ interface IState {
 }
 
 
-Modal.setAppElement("#root")
 
-class Dialog extends React.Component<IDialogOptions, IState> {
-    constructor(props: IDialogOptions) {
+interface ModalOptions {
+    content: Content
+}
+
+interface Content {
+    top?: string,
+    left?: string,
+    right?: string,
+    bottom?: string,
+    marginRight?: string,
+    transform?: string
+}
+
+export interface DialogOptions {
+    onDialogClose?: () => void
+    modalOptions?: ModalOptions,
+    contentLabel?: string,
+    subtitle?: string,
+    content?: JSX.Element,
+    parentRef?: Element
+}
+
+class Dialog extends React.Component<DialogOptions, IState> {
+    constructor(props: DialogOptions) {
         super(props);
         this.state = {
             content: this.props.content,
@@ -29,16 +47,10 @@ class Dialog extends React.Component<IDialogOptions, IState> {
 
     public render() {
         return (
-            <Modal
-                isOpen={this.state.modalIsOpen}
-                onAfterOpen={this.afterOpenModal}
-                onRequestClose={this.closeModal}
-                style={this.props.modalOptions}
-                contentLabel={this.props.contentLabel}
-            >
-                <div className='modal--container'>
+            <Draggable>
+                <div tabIndex={0} className='modal--container'>
                     <div className='modal__title--container'>
-                        <IconButton color="primary" onClick={this.closeModal} className='button--close'>
+                        <IconButton color="default" onClick={this.closeModal} className='button--close'>
                             <Icon>close</Icon>
                         </IconButton>
                         <h1>{this.props.subtitle}</h1>
@@ -47,7 +59,7 @@ class Dialog extends React.Component<IDialogOptions, IState> {
                         {this.state.content}
                     </div>
                 </div>
-            </Modal>
+            </Draggable>
         );
 
     }
@@ -60,13 +72,10 @@ class Dialog extends React.Component<IDialogOptions, IState> {
         if (this.props.parentRef) {
             document.body.removeChild(this.props.parentRef);
         }
-    }
 
-    private afterOpenModal = () => {
-        // references are now sync'd and can be accessed.
-        if (this.props.afterOpenModal) {
-
-            this.props.afterOpenModal();
+        const { onDialogClose } = this.props;
+        if(onDialogClose) {
+            onDialogClose();
         }
     }
 }

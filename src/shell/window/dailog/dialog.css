@@ -1,15 +1,21 @@
 .modal--container {
-    background-color: #F5F5F5;
-    opacity: .7;
-    position: absolute;
+    background-color: #DCDCDC;
     top: 0;
-    width: 100%;
+    width: 500px;
+    position: absolute;
     left:0;
-    height: 50px;
+    height: 300px;
+    border: 1px solid #303030;
+}
+
+.modal--container:focus{
+    z-index: 1002;
 }
 
 .modal__title--container {
     padding:0 10px 0 10px;
+    background-color: #A9A9A9;
+    border-bottom: .5px solid #303030;
 }
 
 .button--close {
@@ -24,5 +30,8 @@
 }
 
 h1{
-    margin:6.5px 0 6.5px 0 !important;
+    margin: 0;
+    font-family: "Roboto";
+    font-weight: 400;
+    color: #303030;
 }

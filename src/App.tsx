@@ -1,14 +1,18 @@
 import * as React from 'react';
-import './App.css';
-import logo from './logo.svg';
 import taskManager from './kernel/proces-management/task/taskManager';
 import scheduler from './kernel/proces-management/scheduler/scheduler';
 import { Connector } from './kernel/connector/connector';
 import conenctorRegister from './kernel/connector-register/connetor-register';
+import  styled from  "styled-components"
 
 
-
-
+const StyledDiv = styled.div`
+text-align: center;
+background: url("https://www.planwallpaper.com/static/images/3865967-wallpaper-full-hd_XNgM7er.jpg");
+background-size: cover;
+width: 100vw;
+height: 100vh;
+`;
 
 class App extends React.Component {
 
@@ -37,13 +41,9 @@ class App extends React.Component {
 
   public render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
+      <StyledDiv>
         <button onClick={this.openDialog}>Open dialog</button>
-      </div>
+      </StyledDiv>
     );
   }
 }

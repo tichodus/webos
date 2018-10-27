@@ -1,34 +1,9 @@
 import * as React from 'react';
-import Dialog from './dailog/dialog';
-import { Connector } from 'src/kernel/connector/connector';
+import Dialog, { DialogOptions } from './dailog/dialog';
 import * as ReactDOM from 'react-dom';
 
 
-
-interface IModalOptions {
-    content: IContent
-}
-
-
-interface IContent {
-    top?: string,
-    left?: string,
-    right?: string,
-    bottom?: string,
-    marginRight?: string,
-    transform?: string
-}
-
-export interface IDialogOptions {
-    afterOpenModal?: () => void
-    modalOptions?: IModalOptions,
-    contentLabel?: string,
-    subtitle?: string,
-    content?: JSX.Element,
-    parentRef?: Element
-}
-
-export interface WindowOptions extends IDialogOptions {
+export interface WindowOptions extends DialogOptions {
     width?: number,
     height?: number,
     parentRef?: Element
@@ -38,15 +13,11 @@ export class Window {
     private dialog: JSX.Element;
     private dialogRef: React.RefObject<Dialog>;
     private options: WindowOptions;
-    private connector: Connector;
+
 
     constructor(options: WindowOptions) {
         this.options = options;
         this.dialogRef = React.createRef<Dialog>();
-    }
-
-    public get connectorInstance() {
-        return this.connector;
     }
 
     public setWindowContent(content: JSX.Element) {
@@ -73,7 +44,7 @@ export class Window {
             this.dialog =
                 <Dialog
                     ref={this.dialogRef}
-                    afterOpenModal={this.options.afterOpenModal}
+                    onDialogClose={this.options.onDialogClose}
                     modalOptions={this.options.modalOptions}
                     contentLabel={this.options.contentLabel}
                     subtitle={this.options.subtitle}
