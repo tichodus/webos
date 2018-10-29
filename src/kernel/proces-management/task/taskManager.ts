@@ -28,7 +28,7 @@ class TaskManager {
     }
 
     public setJobForTask(job: Job) {
-        return import(`worker-loader!../../../test/${job.threadUrl}`).then((Worker: any) => {
+        return import(`worker-loader!../../../root/${job.threadUrl}`).then((Worker: any) => {
             const worker = new Worker();
             this.tasksTable.getTask(job.taskId).Worker = worker;
         })

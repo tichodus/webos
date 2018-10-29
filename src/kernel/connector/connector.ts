@@ -29,7 +29,7 @@ export class Connector {
 
     public notify(message: Message) {
         if (this.task.Worker) {
-            this.task.Worker.postMessage(message);
+            this.task.Worker.postMessage(JSON.stringify(message));
         }
     }
 
@@ -39,6 +39,17 @@ export class Connector {
         }
         this.window = WindowManager.createWindow(options);
         this.window.render();
+        if (this.window.parent) {
+            this.window.parent.addEventListener("click", ($event) => {
+                this.notify({ type: MessageType.WITHOUTPARAMS, data: ($event.target as any).id })
+            });
+            this.window.parent.addEventListener("keyup", ($event) => {
+                this.notify({ type: MessageType.WITHPARAMS, data: ($event.target as any).id, params:($event.target as any).innerHtml});
+            });
+            this.window.parent.addEventListener("change", ($event) => {
+                this.notify({ type: MessageType.WITHPARAMS, data: ($event.target as any).id, params:($event.target as any).value});
+            });
+        }
     }
 
     private onMessageRecieved(message: Message) {

@@ -3,7 +3,9 @@ import taskManager from './kernel/proces-management/task/taskManager';
 import scheduler from './kernel/proces-management/scheduler/scheduler';
 import { Connector } from './kernel/connector/connector';
 import conenctorRegister from './kernel/connector-register/connetor-register';
-import  styled from  "styled-components"
+import styled from "styled-components"
+import { testApp } from './root';
+
 
 
 const StyledDiv = styled.div`
@@ -17,11 +19,7 @@ height: 100vh;
 class App extends React.Component {
 
   public componentDidMount() {
-    setTimeout(() => scheduler.startScheduling(), 3000);
-    window.addEventListener("click", ($event) => {
-      console.log(($event.target as any).title === 'workerEvent');
-      scheduler.notifyWorking(($event.target as any).id);
-    });
+    scheduler.startScheduling();
   }
 
 
@@ -31,7 +29,7 @@ class App extends React.Component {
     const task = taskManager.fork();
     taskManager.setJobForTask({
       taskId: task.Pid,
-      threadUrl: 'testApp',
+      threadUrl: testApp.Path,
     }).then(() => {
       taskManager.run(task);
       const connector = new Connector(task);
