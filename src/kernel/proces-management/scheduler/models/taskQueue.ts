@@ -20,7 +20,7 @@ export class TaskQueue {
             throw Error("Task has no job to do.");
         }
         this.workingQueue.push(task);
-        task.Worker.postMessage(MessageType.RUN)
+        task.Worker.postMessage(JSON.stringify({ type: MessageType.RUN }));
     }
 
     public prepareTask(task: Task) {

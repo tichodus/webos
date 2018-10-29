@@ -125,6 +125,7 @@ module.exports = {
         enforce: 'pre',
         include: paths.appSrc,
       },
+
       {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall
