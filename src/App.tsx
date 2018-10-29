@@ -3,9 +3,8 @@ import taskManager from './kernel/proces-management/task/taskManager';
 import scheduler from './kernel/proces-management/scheduler/scheduler';
 import { Connector } from './kernel/connector/connector';
 import conenctorRegister from './kernel/connector-register/connetor-register';
-import styled from "styled-components"
+import  styled from  "styled-components"
 import { testApp } from './root';
-
 
 
 const StyledDiv = styled.div`
@@ -16,16 +15,32 @@ width: 100vw;
 height: 100vh;
 `;
 
-class App extends React.Component {
+interface AppState {
+  counter: number;
+}
+
+class App extends React.Component<{}, AppState> {
+  constructor() {
+    super({});
+    this.state = {
+      counter: 0
+    }
+  }
 
   public componentDidMount() {
+    setTimeout(() => scheduler.startScheduling(), 3000);
+    window.addEventListener("click", ($event) => {
+      console.log(($event.target as any).title === 'workerEvent');
+      scheduler.notifyWorking(($event.target as any).id);
+    });
     scheduler.startScheduling();
+    setInterval(() => { this.setState({ counter: this.state.counter + 1 }) }, 3000);
   }
 
 
 
 
-  public openDialog = () => {
+  public startCalculator = () => {
     const task = taskManager.fork();
     taskManager.setJobForTask({
       taskId: task.Pid,
@@ -37,10 +52,30 @@ class App extends React.Component {
     });
   }
 
+  public blockThread = () => {
+    while (true) {
+      continue;
+    }
+  }
+
+  public startCounter = () => {
+    const task = taskManager.fork();
+    taskManager.setJobForTask({
+      taskId: task.Pid,
+      threadUrl: "blocker/",
+    }).then(() => {
+      taskManager.run(task);
+      const connector = new Connector(task);
+      conenctorRegister.registerConnector(task.Pid, connector);
+    });
+  }
   public render() {
     return (
       <StyledDiv>
-        <button onClick={this.openDialog}>Open dialog</button>
+        <button onClick={this.startCalculator}>Calculator</button>
+        <button onClick={this.startCounter}>Blocker within thread</button>
+        <button onClick={this.blockThread}>Blocker within single thread</button>
+        <label style={{ color: "#ffffff" }}>{this.state.counter}</label>
       </StyledDiv>
     );
   }
