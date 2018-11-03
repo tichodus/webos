@@ -1,4 +1,4 @@
-import app from "./test";
+import app from "./blocker";
 import { MessageType, Message } from 'src/kernel/types/message.enum';
 
 // const ctx : Worker= self as any;

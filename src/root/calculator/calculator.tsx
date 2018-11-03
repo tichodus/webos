@@ -21,7 +21,7 @@ class Application {
     }
     public main() {
         const windowOptions: WindowOptions = {
-            subtitle: "Test app",
+            subtitle: "Calculator",
         }
 
         const message: Message = {
